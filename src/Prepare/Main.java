@@ -1,3 +1,5 @@
+package Prepare;
+
 import java.sql.*;
 
 public class Main {
@@ -9,21 +11,13 @@ public class Main {
         Connection conn= DriverManager.getConnection(url,"root","");
         System.out.println("connection success");
 
-        //fetch data from database
-        Statement statement =conn.createStatement();
+        //Prepare statement
+        PreparedStatement preparedStatement = conn.prepareStatement("SELECT * from data WHERE id =? OR address=?");
+        preparedStatement.setInt(1,1);
+        preparedStatement.setString(2,"Pkr");
 
-        //insert query
-//      statement.executeUpdate("insert into data values ('2','Neha','Bkt')");
-//      statement.executeUpdate("insert into data values ('3','Riya','Pkr')");
+        ResultSet resultSet =preparedStatement.executeQuery();
 
-        //delete query
-//      statement.executeUpdate("delete from data where id=6");
-
-        //update query
-//      statement.executeUpdate("update data set address='BKT' where id=3");
-        ResultSet resultSet=statement.executeQuery("Select * from data");
-
-        System.out.println(resultSet);
         while (resultSet.next())
         {
             System.out.print(resultSet.getInt("id" ));
